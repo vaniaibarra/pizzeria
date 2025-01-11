@@ -1,11 +1,14 @@
 import Header from "./components/Header"
 import CardPizza from "./components/CardPizza"
+import { pizzas } from "../data/pizzas"
+
+
 function Home() {
 
     return (
       <>      
         <Header/>
-        <div className="flex space-x-5 p-7">
+{/*       <div className="flex space-x-5 p-7">
         
         <CardPizza
           name="Napolitana"
@@ -25,8 +28,22 @@ function Home() {
           ingredients={["Mozzarella, ", "Pepperoni, ", "Orégano."]}
           img="https://firebasestorage.googleapis.com/v0/b/apis-varias-mias.appspot.com/o/pizzeria%2Fpizza-1239077_640_com.jpg?alt=media&token=e7cde87a-08d5-4040-ac54-90f6c31eb3e3"
         />
-        </div>
+        </div> */}
       
+      <div>
+        <div className="bg-orange-400 text-white">
+          <h1 className="font-mono text-2xl text-center p-3">Menú de pizzas</h1>
+        </div>
+        <div className="grid grid-cols-3 gap-y-5 gap-x-5 p-7">
+          {pizzas.map((pizza) => (
+            <CardPizza
+            key={pizza.id}
+            pizza={pizza}
+            
+            />
+          ))}
+        </div>
+      </div>
       </>
     )
   }
