@@ -1,8 +1,30 @@
-import format from "../../utils/format"
-function CardPizza ({pizza})  {
-    return(
-        <>
-            <div className="flex space-x-5">
+import React, { useEffect, useState } from 'react';
+import format from '../../utils/format';
+const Pizza = () => {
+  const [pizza, setPizza] = useState("");
+  
+
+  useEffect(() => {
+    
+    fetch('http://localhost:5002/api/pizzas/p001')
+      .then((response) => response.json())
+      .then((data) => {
+        setPizza(data); 
+        
+      })
+      
+  }, []);
+  if (!pizza) {
+    return <p>Loading...</p>;
+  }
+
+  return (
+    <>
+    
+    <div className="bg-orange-400 text-white">
+      <h1 className="font-mono text-2xl text-center p-3">Menú de pizzas</h1>
+    </div>
+    <div className="flex w-1/5">
                 <div>
                     <img 
                     src={pizza.img} 
@@ -13,13 +35,7 @@ function CardPizza ({pizza})  {
                         </div>
                         <div className="border-b-2 border-gray-400 p-3 text-center">
                             <p className="text-center text-xl font-thin">Ingredientes:</p>
-                            <div className="font-extralight text-sm"> 
-                            <ul>
-                                {pizza.ingredients.map((ingredient, id) => (
-                                    <li key={id}>🍕 {ingredient}</li>
-                                ))}
-                                </ul>
-                             </div>
+                            <p>{pizza.ingredients.join(", ")}</p>
                             <hr/>
                             <p className="font-extralight text-sm">{pizza.desc}</p>
                         </div>
@@ -36,8 +52,9 @@ function CardPizza ({pizza})  {
                     </div>
                 </div>
             </div>
-        </>
-    )
-}
+    </>
+  );
+};
 
-export default CardPizza
+
+export default Pizza;
