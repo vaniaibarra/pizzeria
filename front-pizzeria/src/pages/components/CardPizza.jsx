@@ -1,5 +1,11 @@
 import format from "../../utils/format"
+import { useContext } from "react";
+import { CartContext } from "../../context/CartContext";
+
 function CardPizza ({pizza})  {
+
+    const {addPizza} = useContext(CartContext);
+
     return(
         <>
             <div className="flex space-x-5">
@@ -30,7 +36,9 @@ function CardPizza ({pizza})  {
                             </div>
                             <div className="flex justify-between p-4">
                                 <button className="border-gray-400 border-2 rounded p-1">Ver más</button>
-                                <button className="bg-black text-white rounded p-1">🛒 Añadir</button>
+                                <button className="bg-black text-white rounded p-1"
+                                onClick={() => addPizza(pizza)}
+                                >🛒 Añadir</button>
                             </div>
                         </div>
                     </div>
