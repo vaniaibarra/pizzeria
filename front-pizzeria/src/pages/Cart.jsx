@@ -3,9 +3,11 @@ import { useState } from "react";
 import format from "../utils/format";
 import { CartContext } from "../context/CartContext";
 import { useContext } from "react";
+import { useUser } from "../context/UserContext";
 
 const Cart = () => {
 
+    const {token} = useUser();
 
 const {cart, setCart} = useContext(CartContext);
 
@@ -47,7 +49,9 @@ const handlePay = () => {
                         </div>
                     ))}
                     <p>Total: ${format(total)}</p>
-                    <button className="bg-black text-white rounded-md p-2">Pagar</button>
+                    <button 
+                    disabled={!token}
+                    className="bg-black text-white rounded-md p-2">Pagar</button>
                 </div>
             </div>
         </>

@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useUser } from "../context/UserContext";
 
 const LoginPage = () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
+    const { token, login } = useUser();
+    const navigate = useNavigate();
 
     const validarDatos = (e) => {
         e.preventDefault();
@@ -14,7 +18,9 @@ const LoginPage = () => {
         }else if(password < 6) {
             setMessage('La constraseña debe contener más de 6 caracteres')
         } else {
-            setMessage('Inicio de sesión exitoso')
+            setMessage('Inicio de sesión exitoso');
+            login('true')
+            navigate('/');
         }
     }
 
@@ -38,7 +44,7 @@ const LoginPage = () => {
                     type="password"
                     name="password"
                     className="border-2 border-black rounded-md w-1/5"
-                    value={email}
+                    value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
             </div>

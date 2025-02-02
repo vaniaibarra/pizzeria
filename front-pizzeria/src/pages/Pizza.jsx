@@ -1,13 +1,15 @@
 import { useState, useEffect } from "react";
+import {useParams} from "react-router-dom";
 import format from "../utils/format";
 import Header from "./components/Header";
 
 
 const Pizza = () => {
     const [pizza, setPizza] = useState("");
+    const { id}  = useParams();
     
       useEffect(() => {
-        fetch('http://localhost:5002/api/pizzas/p001')
+        fetch(`http://localhost:5002/api/pizzas/${id}`)
         .then((res) => res.json())
         .then((data) => {
           setPizza(data);

@@ -1,5 +1,6 @@
 import format from "../../utils/format"
 import { useContext } from "react";
+import { Link } from "react-router-dom";
 import { CartContext } from "../../context/CartContext";
 
 function CardPizza ({pizza})  {
@@ -35,7 +36,9 @@ function CardPizza ({pizza})  {
                                 <p className="text-xl font-semibold text-center"> Precio: ${format(pizza.price)} </p>
                             </div>
                             <div className="flex justify-between p-4">
-                                <button className="border-gray-400 border-2 rounded p-1">Ver más</button>
+                                <Link
+                                to={`/pizza/${pizza.id}`}
+                                 className="border-gray-400 border-2 rounded p-1">Ver más</Link>
                                 <button className="bg-black text-white rounded p-1"
                                 onClick={() => addPizza(pizza)}
                                 >🛒 Añadir</button>

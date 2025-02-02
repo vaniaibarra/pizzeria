@@ -8,9 +8,14 @@ import Register from './pages/Register'
 import LoginPage from './pages/LoginPage'
 import Profile from './pages/Profile'
 import NotFound from './pages/NotFound'
-import { Routes, Route } from 'react-router-dom'
+import AppRoutes from './routes/AppRoutes'
+import { Routes, Route, Navigate } from 'react-router-dom'
+import ProtectedRoutes from './routes/ProtectedRoutes'
+import { useUser } from './context/UserContext'
 
 function App() {
+
+  const {token} = useUser();
 
   return (
     <>      
@@ -20,11 +25,14 @@ function App() {
     <div className='flex flex-col flex-grow'>
      <Routes>
         <Route path='/' element={<Home/>}/>
-        <Route path='/pizza/p001' element={<Pizza/>}/>
+        <Route path='/pizza/:id' element={<Pizza/>}/>
         <Route path='/cart' element={<Cart/>}/>
-        <Route path='/register' element={<Register/>}/>
-        <Route path='/login' element={<LoginPage/>}/>
-        <Route path='/profile' element={<Profile/>} />
+        <Route path='/register' element={token ? <Navigate to="/" /> : <Register />}/>
+        <Route path='/login' element={token ? <Navigate to="/" /> : <LoginPage />}/>
+        <Route path='/profile' 
+        element={
+          <ProtectedRoutes element={<Profile/>}/>
+        } />
         <Route path='*' element={<NotFound/>}/>
       </Routes>
       </div>

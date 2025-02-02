@@ -2,10 +2,12 @@ import format from "../utils/format";
 import { Link } from "react-router-dom";
 import { CartContext } from "../context/CartContext";
 import { useContext } from "react";
+import { useUser } from "../context/UserContext";
+
 
 function Navbar() {
     const {total} = useContext(CartContext);
-    const token = false;
+    const {token, logout} = useUser();
 
     return (
       <>   
@@ -18,14 +20,20 @@ function Navbar() {
             <div>
 
                 {token ? (
+                    
+                    <div className="flex gap-x-5">
+                        <Link to="/profile" className="border-2 border-white rounded">🔓 Profile</Link>
+                        <button 
+                            onClick={logout} 
+                            className="border-2 border-white rounded bg-red-500 px-2">
+                            🔒 Logout
+                        </button>
+                    </div>
+                ) : (
+                    
                     <div className="flex gap-x-5">
                         <Link to="/login" className="border-2 border-white rounded">🔐 Login</Link>
                         <Link to="/register" className="border-2 border-white rounded">🔐 Register</Link>
-                    </div>
-                ) : (
-                    <div className="flex gap-x-5">
-                        <Link to="/profile" className="border-2 border-white rounded">🔓 Profile</Link>
-                        <Link to="/" className="border-2 border-white rounded">🔒 Logout</Link>
                     </div>
                 )
                 }
