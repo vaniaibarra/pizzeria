@@ -7,7 +7,7 @@ export const useUser = () => {
 };
 
 export const UserProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem('token') || false);
+  const [token, setToken] = useState(localStorage.getItem('token') || true);
 
   
   useEffect(() => {
