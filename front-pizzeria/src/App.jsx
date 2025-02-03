@@ -28,7 +28,7 @@ function App() {
         <Route path='/pizza/:id' element={<Pizza/>}/>
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/register' element={token ? <Navigate to="/" /> : <Register />}/>
-        <Route path='/login' element={token ? <Navigate to="/" /> : <LoginPage />}/>
+        <Route path='/login' element={token ? <Navigate to="/profile" /> : <LoginPage />}/>
         <Route 
           path='/profile' 
           element={

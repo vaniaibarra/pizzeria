@@ -7,8 +7,9 @@ export const useUser = () => {
 };
 
 export const UserProvider = ({ children }) => {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState(() => localStorage.getItem('token') || null);
   const [email, setEmail] = useState('');
+  const [userData, setUserData] = useState({})
   console.log(token);
 
   //metodo register
@@ -51,9 +52,10 @@ const login = async (email, password) => {
     if(response.ok) {
      setToken(data.token)
      setEmail(data.email)
+     localStorage.setItem('token', data.token)
      alert('Login exitoso')
     } else {
-      //const error = await response.json()
+      const error = await response.json()
       return { success: false, error: data.message || 'Error desconocido' };
       alert('Error al ingresar', error)
     }
@@ -63,7 +65,34 @@ const login = async (email, password) => {
   }
 }
 
-  //metodo payload
+  //METODO PAYLOAD
+
+  const getProfile = async () => {
+    try {
+      const response = await fetch('http://localhost:5002/api/auth/me', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`
+        },
+    
+      })
+  
+      if(response.ok) {
+       const data = await response.json()
+        setUserData(data)
+      } else {
+        const error = await response.json()
+
+        alert('Error al ingresar', error)
+      }
+  
+    } catch ( error ) {
+      console.log('Error', error)
+    }
+  }
+
+
 
   
   useEffect(() => {
@@ -79,11 +108,13 @@ const login = async (email, password) => {
   //};
 
   const logout = () => {
-    setToken(false);  
+    setToken(null);  
+    localStorage.removeItem
+    setEmail('');
   };
 
   return (
-    <UserContext.Provider value={{ token, logout, register, login, email }}>
+    <UserContext.Provider value={{ token, logout, register, login, email, getProfile, userData }}>
       {children}
     </UserContext.Provider>
   );
