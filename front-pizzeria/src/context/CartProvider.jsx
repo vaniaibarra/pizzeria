@@ -16,10 +16,11 @@ const CartProvider = ({children}) => {
 
   const handleCheckout = async () => {
     try {
-      const response = await fetch('http://localhost:5002/api/auth/checkouts', {
+      const response = await fetch('http://localhost:5002/api/checkouts', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ cart }),
       });
