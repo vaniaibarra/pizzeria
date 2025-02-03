@@ -7,20 +7,31 @@ const LoginPage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [message, setMessage] = useState('');
-    const { token, login } = useUser();
+    const { login } = useUser();
     const navigate = useNavigate();
 
-    const validarDatos = (e) => {
+    const validarDatos = async (e) => {
         e.preventDefault();
-
-        if(!email || !password){
-            setMessage('Todos los campos son obligatorios')
-        }else if(password < 6) {
-            setMessage('La constraseña debe contener más de 6 caracteres')
-        } else {
+    
+        // Validación de campos antes de intentar login
+        if (!email || !password) {
+            setMessage('Todos los campos son obligatorios');
+            return;
+        } else if (password.length < 6) {
+            setMessage('La contraseña debe contener al menos 6 caracteres');
+            return;
+        }
+    
+        // Intentar login después de validar los campos
+        const result = await login(email, password);
+    
+        if (result.success) {
             setMessage('Inicio de sesión exitoso');
-            login('true')
-            navigate('/');
+            setEmail('');
+            setPassword('');
+            navigate('/profile');  // Redirigir solo si el login fue exitoso
+        } else {
+            setMessage(result.error || 'Error al iniciar sesión');
         }
     }
 

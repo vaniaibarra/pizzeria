@@ -29,10 +29,14 @@ function App() {
         <Route path='/cart' element={<Cart/>}/>
         <Route path='/register' element={token ? <Navigate to="/" /> : <Register />}/>
         <Route path='/login' element={token ? <Navigate to="/" /> : <LoginPage />}/>
-        <Route path='/profile' 
-        element={
-          <ProtectedRoutes element={<Profile/>}/>
-        } />
+        <Route 
+          path='/profile' 
+          element={
+            <ProtectedRoutes>
+              <Profile />
+            </ProtectedRoutes>
+          } 
+        />
         <Route path='*' element={<NotFound/>}/>
       </Routes>
       </div>

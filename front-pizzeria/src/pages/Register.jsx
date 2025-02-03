@@ -1,13 +1,17 @@
 import { useState } from "react";
+import { useUser } from "../context/UserContext";
 
 const Register = () => {
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
 const [confirmPassword, setConfirmPassword] = useState('');
 const [message, setMessage] = useState('');
+const { register } = useUser();
 
-const validadDatos = (e) => {
+const validadDatos = async (e) => {
     e.preventDefault();
+    await register(email, password)
+
     if(!email || !password || !confirmPassword){
         setMessage('Todos los campos son obligatorios');
     } else if (password.length < 6){
